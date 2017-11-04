@@ -32,4 +32,4 @@ Insert all countries and cities into country table
 insert_countries(insert_country)
 insert_cities(insert_city)
 
-show_records('cities')
+show_records('countries')

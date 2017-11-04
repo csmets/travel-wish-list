@@ -45,39 +45,54 @@ def get_country_name(country_code):
 
         if country['code'].lower() == country_code.lower():
 
-            return country['name'].capitilize()
+            return country['name'].capitalize()
 
 
 def get_wikipedia_description(search):
     """ Using wikipedia api to fetch descriptions """
 
-    wiki_req = requests.get(
-        'https://en.wikipedia.org/w/api.php'
-        + '?format=json'
-        + '&action=query'
-        + '&prop=extracts'
-        + '&exintro='
-        + '&explaintext='
-        + '&titles={query}'
-        .format(query=search))
+    """
+    It's found that wikipedia's api is too slow that it takes a lot of time to
+    ingest the data, for now I decided to deactivate this as I want this up and
+    running quickly.
 
-    response = wiki_req.json()
+    Descriptions will have to be called via the app (front-end)
+    """
 
-    pages = response['query']['pages']
+    disable = True
 
-    description = ""
+    if disable is False:
+        wiki_req = requests.get(
+            'https://en.wikipedia.org/w/api.php'
+            + '?format=json'
+            + '&action=query'
+            + '&prop=extracts'
+            + '&exintro='
+            + '&explaintext='
+            + '&titles={query}'
+            .format(query=search))
 
-    for value in pages.values():
+        response = wiki_req.json()
 
-        if 'extract' in value:
+        pages = response['query']['pages']
 
-            description = value['extract']
+        description = ""
 
-        else:
+        for value in pages.values():
 
-            description = ""
+            if 'extract' in value:
 
-        break
+                description = value['extract']
+
+            else:
+
+                description = ""
+
+            break
+
+    else:
+
+        description = ""
 
     return description
 
