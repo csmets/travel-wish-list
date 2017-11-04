@@ -5,7 +5,7 @@ Database function uses to build the database for the travel wish list
 
 import sqlite3
 
-TESTING_DB = True # Use for testing; store in memory or to file
+TESTING_DB = False # Use for testing; store in memory or to file
 
 DB_FILE = 'travel-wish-list.db'
 
@@ -160,3 +160,9 @@ def show_records(table_name):
         """.format(name=table_name))
 
         print(c.fetchall())
+
+
+def close_db():
+
+    if conn:
+        conn.close()

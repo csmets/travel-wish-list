@@ -10,7 +10,7 @@ from database_functions import (
     create_travel_table,
     insert_country,
     insert_city,
-    show_records
+    close_db
 )
 
 from country_functions import insert_countries, insert_cities
@@ -31,5 +31,4 @@ Insert all countries and cities into country table
 """
 insert_countries(insert_country)
 insert_cities(insert_city)
-
-show_records('countries')
+close_db()
