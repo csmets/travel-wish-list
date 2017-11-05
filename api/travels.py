@@ -4,6 +4,20 @@ import json
 import falcon
 from database import Database
 
+class Travels:
+
+    def on_get(self, req, resp):
+
+        db = Database()
+
+        travels = db.fetchall('travel')
+
+        resp.body = json.dumps(travels)
+
+        resp.content_type = 'application/json'
+
+        resp.status = falcon.HTTP_200
+
 class Travel:
 
     def on_post(self, req, resp):

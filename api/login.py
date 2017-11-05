@@ -17,15 +17,21 @@ class Login:
 
             user = db.fetch_user_account(post['username'])
 
-            user_password = user['password']
+            if user is not None:
 
-            if bcrypt.checkpw(post['password'].encode('utf-8'), user_password):
+                user_password = user['password']
 
-                resp.status = falcon.HTTP_200
+                if bcrypt.checkpw(post['password'].encode('utf-8'), user_password):
+
+                    resp.status = falcon.HTTP_200
+
+                else:
+
+                    resp.status = falcon.HTTP_401
 
             else:
 
-                resp.status = falcon.HTTP_401
+                resp.status = falcon.HTTP_422
 
         else:
 

@@ -15,6 +15,42 @@ class Database:
         self._c = self._conn.cursor()
 
 
+    def _json_record(self, data, multiple):
+
+        if multiple is True:
+
+            record = [dict((self._c.description[i][0], value) \
+                for i, value in enumerate(row)) for row in data]
+
+        else:
+
+            record = dict((self._c.description[i][0], value) \
+                for i, value in enumerate(data))
+
+        return record
+
+
+    def _get_results(self, multiple):
+
+        if multiple is True:
+
+            record = self._c.fetchall()
+
+        else:
+
+            record = self._c.fetchone()
+
+        if record is not None:
+
+            if len(record) > 0:
+
+                result = self._json_record(record, multiple)
+
+                return result
+
+        return None
+
+
     def fetch(self, table, key, value):
 
         with self._conn:
@@ -27,8 +63,7 @@ class Database:
                 }
             )
 
-            result = dict((self._c.description[i][0], value) \
-                for i, value in enumerate(self._c.fetchone()))
+            result = self._get_results(False)
 
             return result
 
@@ -48,8 +83,7 @@ class Database:
                                 "value2": value2
                             })
 
-            result = dict((self._c.description[i][0], value) \
-                for i, value in enumerate(self._c.fetchone()))
+            result = self._get_results(False)
 
             return result
 
@@ -60,8 +94,7 @@ class Database:
 
             self._c.execute("SELECT * FROM {table}".format(table=table))
 
-            result = [dict((self._c.description[i][0], value) \
-                for i, value in enumerate(row)) for row in self._c.fetchall()]
+            result = self._get_results(True)
 
             return result
 
@@ -75,8 +108,7 @@ class Database:
                 WHERE {column} IS :match
                 """.format(table=table, column=column), {'match': match})
 
-            result = [dict((self._c.description[i][0], value) \
-                for i, value in enumerate(row)) for row in self._c.fetchall()]
+            result = self._get_results(True)
 
             return result
 
@@ -87,18 +119,23 @@ class Database:
 
             self._c.execute("SELECT user FROM users")
 
-            users = [dict((self._c.description[i][0], value) \
-                for i, value in enumerate(row)) for row in self._c.fetchall()]
+            users = self._get_results(True)
 
-            def append_travels(user):
+            if users is not None:
 
-                travels = self.fetch_travels(user['user'])
+                def append_travels(user):
 
-                user['travels'] = travels
+                    travels = self.fetch_travels(user['user'])
 
-                return user
+                    user['travels'] = travels
 
-            result = list(map(append_travels, users))
+                    return user
+
+                result = list(map(append_travels, users))
+
+            else:
+
+                result = None
 
             return result
 
@@ -110,12 +147,17 @@ class Database:
             self._c.execute("SELECT user FROM users WHERE user = :name",
                             {'name': name})
 
-            user = dict((self._c.description[i][0], value) \
-                for i, value in enumerate(self._c.fetchone()))
+            user = self._get_results(False)
 
-            travels = self.fetch_travels(user['user'])
+            if user is not None:
 
-            user['wish-list'] = travels
+                travels = self.fetch_travels(user['user'])
+
+                user['wish-list'] = travels
+
+            else:
+
+                user = None
 
             return user
 
@@ -127,8 +169,7 @@ class Database:
             self._c.execute("SELECT * FROM users WHERE user = :name",
                             {'name': name})
 
-            user = dict((self._c.description[i][0], value) \
-                for i, value in enumerate(self._c.fetchone()))
+            user = self._get_results(False)
 
             return user
 
@@ -140,8 +181,7 @@ class Database:
             self._c.execute("SELECT * FROM travel WHERE user = :name",
                             {'name': username})
 
-            result = [dict((self._c.description[i][0], value) \
-                for i, value in enumerate(row)) for row in self._c.fetchall()]
+            result = self._get_results(True)
 
             return result
 
@@ -161,9 +201,9 @@ class Database:
                                 'city': city
                             })
 
-            result = int(self._c.fetchone()[0])
+            result = self._get_results(False)
 
-            return result
+            return int(result)
 
 
     def insert_vote(self, username, country, city, votes):

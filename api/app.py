@@ -16,7 +16,7 @@ from cities import City
 
 from users import User
 
-from travels import Travel
+from travels import Travels, Travel
 
 from votes import Vote
 
@@ -35,6 +35,8 @@ api.add_route('/country/{country}/city/{city}', City())
 api.add_route('/users/{query}', User())
 
 api.add_route('/travel', Travel())
+
+api.add_route('/travels', Travels())
 
 api.add_route('/travel/vote', Vote())
 
