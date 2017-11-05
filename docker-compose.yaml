@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+
+  api:
+    container_name: travel_wish_list_api
+    build: api
+    ports:
+        - 8000:8000
+    volumes:
+        - './api/travel-wish-list.db:/var/www/html/travel-wish-list.db'
+
+  site:
+   container_name: travel_wish_list_app
+   build: app
+   ports:
+       - 9000:80

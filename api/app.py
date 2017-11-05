@@ -22,7 +22,7 @@ from votes import Vote
 
 from login import Login
 
-cors = CORS(allow_origins_list=['http://localhost:8080'])
+cors = CORS(allow_origins_list=['http://localhost:9000'])
 
 api = falcon.API(middleware=[cors.middleware])
 
