@@ -13,7 +13,7 @@ However, the api did take some time to build causing a scramble to write up a
 javascript app.
 
 I am unhappy that I wasn't able to have time to write up any unit tests; due to
-time. If I had the time, test-driving development would have help a lot with
+time. If I had the time, test-driven development would have help a lot with
 writing the api.
 
 This is by no means production worthy and will contains some bugs :) "it's a
