@@ -8,7 +8,7 @@ services:
     ports:
         - 8000:8000
     volumes:
-        - './api/travel-wish-list.db:/var/www/html/travel-wish-list.db'
+        - './api/travel-wish-list.db:/api/travel-wish-list.db'
 
   site:
    container_name: travel_wish_list_app
