@@ -14,10 +14,10 @@ curl http://localhost:8000/countries
 curl http://localhost:8000/country/<country name>
 
 # Get city info
-curl http://localhost:8000/country/<country name/city/<city name>
+curl http://localhost:8000/country/<country name>/city/<city name>
 
 # Get all cities
-curl http://localhost:8000/country/<country name/city/all
+curl http://localhost:8000/country/<country name>/city/all
 
 # Get user data that will return username and all travel items
 curl http://localhost:8000/users/<username>

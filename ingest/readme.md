@@ -3,7 +3,8 @@
 The ingester will get important data and insert it into the database to make it
 fast for data retrieval.
 
-This does take some time to build.
+This does take some time to build, however I have a working copy dumped in the
+api directory.
 
 ## Requirements
 
