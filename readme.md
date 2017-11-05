@@ -19,6 +19,18 @@ writing the api.
 This is by no means production worthy and will contains some bugs :) "it's a
 feature, not a bug"
 
+## Urls
+
+**API**
+```
+http://localhost:8000
+```
+
+**App**
+```
+http://localhost:9000
+```
+
 ## Build
 
 To build and preview it is required to have the following:
@@ -28,13 +40,22 @@ To build and preview it is required to have the following:
 
 Linux
 
-```
+``` bash
 sudo bash build.sh
 ```
 
 Mac
-```
+``` bash
 bash build.sh
+```
+
+Once built, you can revisit/reload using docker compose commands.
+
+``` bash
+docker-compose up
+
+# Or to rebuild containers
+docker-compose up --build
 ```
 
 ## Project
