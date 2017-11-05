@@ -12,11 +12,27 @@ class City(object):
 
         country_data = db.fetch('countries', 'name', country)
 
-        country_code = country_data[0]['code']
+        country_code = country_data['code']
 
-        city_details = db.fetchand('cities', 'name', city, 'code', country_code)
+        if city.lower() == 'all':
 
-        resp.body = json.dumps(city_details)
+            city_details = db.fetchall_match_column(
+                'cities',
+                'code',
+                country_code)
+
+            resp.body = json.dumps(city_details)
+
+        else:
+
+            city_details = db.fetchand(
+                'cities',
+                'name',
+                city,
+                'code',
+                country_code)
+
+            resp.body = json.dumps(city_details)
 
         resp.content_type = 'application/json'
 
