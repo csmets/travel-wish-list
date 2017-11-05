@@ -66,6 +66,21 @@ class Database:
             return result
 
 
+    def fetchall_match_column(self, table, column, match):
+
+        with self._conn:
+
+            self._c.execute("""
+                SELECT * FROM {table}
+                WHERE {column} IS :match
+                """.format(table=table, column=column), {'match': match})
+
+            result = [dict((self._c.description[i][0], value) \
+                for i, value in enumerate(row)) for row in self._c.fetchall()]
+
+            return result
+
+
     def fetch_users(self):
 
         with self._conn:
