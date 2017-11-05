@@ -32,12 +32,14 @@ class Travel:
 
             exists = False
 
-            for travel in travels:
+            if travels is not None:
 
-                if (travel['country'].lower() == post['country'].lower()
-                        and travel['city'].lower() == post['city'].lower()):
+                for travel in travels:
 
-                    exists = True
+                    if (travel['country'].lower() == post['country'].lower()
+                            and travel['city'].lower() == post['city'].lower()):
+
+                        exists = True
 
             if exists is False:
 
