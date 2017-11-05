@@ -37,11 +37,13 @@ class User:
 
                 exists = False
 
-                for user in users:
+                if users is not None:
 
-                    if user['user'] == post['username']:
+                    for user in users:
 
-                        exists = True
+                        if user['user'] == post['username']:
+
+                            exists = True
 
                 if exists is False:
 
