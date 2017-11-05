@@ -14,7 +14,7 @@ class City(object):
 
         country_code = country_data[0]['code']
 
-        city_details = db.fetchAnd('cities', 'name', city, 'code', country_code)
+        city_details = db.fetchand('cities', 'name', city, 'code', country_code)
 
         resp.body = json.dumps(city_details)
 
