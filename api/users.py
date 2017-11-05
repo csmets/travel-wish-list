@@ -33,9 +33,25 @@ class User:
 
                 db = Database()
 
-                db.insert_user(post['username'], post['password'])
+                users = db.fetch_users()
 
-                resp.status = falcon.HTTP_200
+                exists = False
+
+                for user in users:
+
+                    if user['user'] == post['username']:
+
+                        exists = True
+
+                if exists is False:
+
+                    db.insert_user(post['username'], post['password'])
+
+                    resp.status = falcon.HTTP_200
+
+                else:
+
+                    resp.status = falcon.HTTP_409
 
             else:
 

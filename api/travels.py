@@ -14,9 +14,29 @@ class Travel:
 
             db = Database()
 
-            db.insert_travel(post['username'], post['country'], post['city'])
+            travels = db.fetch_travels(post['username'])
 
-            resp.status = falcon.HTTP_200
+            exists = False
+
+            for travel in travels:
+
+                if (travel['country'].lower() == post['country'].lower()
+                        and travel['city'].lower() == post['city'].lower()):
+
+                    exists = True
+
+            if exists is False:
+
+                db.insert_travel(
+                    post['username'],
+                    post['country'],
+                    post['city'])
+
+                resp.status = falcon.HTTP_200
+
+            else:
+
+                resp.status = falcon.HTTP_409
 
         else:
 
